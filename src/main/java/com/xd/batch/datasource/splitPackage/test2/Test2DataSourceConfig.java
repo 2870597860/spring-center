@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 
 @Configuration
 // 配置mybatis的接口类放的地方
-@MapperScan(basePackages = "com.xd.batch.mapper.splitPackage.test2", sqlSessionFactoryRef = "test2SqlSessionFactory")
+@MapperScan(basePackages = "com.xd.batch.mapper.test2", sqlSessionFactoryRef = "test2SqlSessionFactory")
 public class Test2DataSourceConfig {
 
     @Bean("test2DataTranManager")
@@ -50,7 +50,7 @@ public class Test2DataSourceConfig {
         bean.setDataSource(datasource);
         // 设置mybatis的xml所在位置
         bean.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources("classpath*:mapper/splitPackage/test2/*.xml"));
+                .getResources("classpath*:mapper/test2/*.xml"));
         bean.setPlugins(new Interceptor[]{DefinePageInterceptor.buildPageInterceptor()});
         return bean.getObject();
     }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.batch.mapper.test1.UserMapper">
+    <resultMap id="BaseResultMap" type="com.xd.batch.entity.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,user_name,`age`,`password`
+    </sql>
+
+    <insert id="insert" parameterType="com.xd.batch.entity.User">
+		insert into t_user (id,user_name,`age`,`password`)
+		values(#{id,jdbcType=INTEGER},
+		#{userName,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{password,jdbcType=VARCHAR})
+	</insert>
+
+    <insert id="batch" parameterType="com.xd.batch.entity.User">
+		insert into t_user (id,user_name,`age`,`password`)
+		values
+		<foreach collection="list" separator="," item="item">
+            (#{id,jdbcType=INTEGER},#{item.userName,jdbcType=VARCHAR},#{item.age,jdbcType=INTEGER},#{item.password,jdbcType=VARCHAR})
+        </foreach>
+	</insert>
+
+
+    <select id="select" resultMap="BaseResultMap" parameterType="java.util.List">
+        select <include refid="Base_Column_List"/> from t_user t1 in
+        <foreach collection="list" separator="," index="index" open="(" close=")" item="item">
+           #{item.userName,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <select id="selectUnionAll" resultMap="BaseResultMap" parameterType="java.util.List">
+        select <include refid="Base_Column_List"/> from t_user t1 join
+        (<foreach collection="list" separator="union all" index="index" item="item">
+            select #{item.userName,jdbcType=VARCHAR} as t_user_name
+        </foreach>) t2 on t2.t_user_name = t1.user_name
+    </select>
+
+    <select id="find" resultMap="BaseResultMap" parameterType="com.xd.batch.entity.User">
+        select * from user
+        <where>
+            <if test="userName!=null and userName!=''">
+                and user_name = #{userName}
+            </if>
+        </where>
+    </select>
+</mapper>

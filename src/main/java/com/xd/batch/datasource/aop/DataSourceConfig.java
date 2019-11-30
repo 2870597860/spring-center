@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@MapperScan(basePackages = "com.xd.batch.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
+@MapperScan(basePackages = "com.xd.batch.mapper.aop", sqlSessionFactoryRef = "sqlSessionFactory")
 public class DataSourceConfig {
 
     @Bean("test3DataTranManager")
@@ -82,7 +82,7 @@ public class DataSourceConfig {
         bean.setDataSource(dynamicDataSource);
         // 设置mybatis的xml所在位置
         bean.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources("classpath*:mapper/aop/*.xml"));
+                .getResources("classpath*:mapper/aop/*/*.xml"));
         bean.setPlugins(new Interceptor[]{DefinePageInterceptor.buildPageInterceptor()});
         return bean.getObject();
     }

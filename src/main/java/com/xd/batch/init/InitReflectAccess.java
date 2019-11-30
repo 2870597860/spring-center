@@ -10,6 +10,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Component
@@ -41,6 +42,7 @@ public class InitReflectAccess implements InitializingBean{
 
     private void cacheMethod(Class<?> aClass){
         MethodAccess methodAccess = MethodAccess.get(aClass);
+        Class[] returnTypes = methodAccess.getReturnTypes();
         String[] methodNames = methodAccess.getMethodNames();
         for (int i = 0; i < methodNames.length; i++) {
             AccessWrapper<MethodAccess> accessWrapper = new AccessWrapper(methodAccess, methodNames[i], i);
@@ -49,7 +51,9 @@ public class InitReflectAccess implements InitializingBean{
     }
 
     private void cacheField(Class<?> aClass){
+        Field[] declaredFields = aClass.getDeclaredFields();
         FieldAccess fieldAccess = FieldAccess.get(aClass);
+        Class[] fieldTypes = fieldAccess.getFieldTypes();
         String[] fieldNames = fieldAccess.getFieldNames();
         for (int i = 0; i < fieldNames.length; i++) {
             AccessWrapper<FieldAccess> accessWrapper = new AccessWrapper(fieldAccess, fieldNames[i], i);

@@ -19,7 +19,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.xd.batch.mapper.splitPackage.test1", sqlSessionFactoryRef = "test1SqlSessionFactory")
+@MapperScan(basePackages = "com.xd.batch.mapper.test1", sqlSessionFactoryRef = "test1SqlSessionFactory")
 public class Test1DataSourceConfig {
 
     @Bean("test1DataTranManager")
@@ -49,7 +49,7 @@ public class Test1DataSourceConfig {
         bean.setDataSource(datasource);
         // 设置mybatis的xml所在位置
         bean.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources("classpath*:mapper/splitPackage/test1/*.xml"));
+                .getResources("classpath*:mapper/test1/*.xml"));
         bean.setPlugins(new Interceptor[]{DefinePageInterceptor.buildPageInterceptor()});
         return bean.getObject();
     }

@@ -2,8 +2,8 @@ package com.xd.batch.service;
 
 import com.xd.batch.entity.Student;
 import com.xd.batch.entity.User;
-import com.xd.batch.mapper.splitPackage.test1.UserMapper;
-import com.xd.batch.mapper.splitPackage.test2.StudentMapper;
+import com.xd.batch.mapper.test1.UserMapper;
+import com.xd.batch.mapper.test2.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +15,6 @@ public class TestService {
     @Autowired
     private StudentMapper studentMapper;
 
-    @Transactional(rollbackFor = Exception.class,transactionManager = "test1DataTranManager")
     public String doUserProcess() throws Exception {
         User user = new User();
         user.setUserName("xiaodai");
@@ -36,7 +35,7 @@ public class TestService {
         Student student = new Student();
         student.setName("xiaodai");
         student.setClassNum("1-6");
-        student.setAge(15);
+        student.setAge(16);
         studentMapper.insert(student);
         return "student-ok";
     }

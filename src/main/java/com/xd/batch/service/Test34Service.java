@@ -1,6 +1,6 @@
 package com.xd.batch.service;
 
-import com.xd.batch.entity.Student;
+import com.xd.batch.entity.Person;
 import com.xd.batch.mapper.aop.test4.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,18 +11,18 @@ public class Test34Service {
     @Autowired
     private PersonMapper personMapper;
 
-    @Transactional(rollbackFor = Exception.class,transactionManager = "test3DataTranManager")
-    public String doStudentProcess() throws Exception {
-        Student student = new Student();
-        student.setName("xiaodai");
-        student.setClassNum("4-6");
-        student.setAge(15);
-        personMapper.insert(student);
-        int i = 1;
+    @Transactional(rollbackFor = Exception.class,transactionManager = "test4DataTranManager")
+    public String doPersonProcess() throws Exception {
+        Person person = new Person();
+        person.setName("xiaodai");
+        person.setClassNum("4-6");
+        person.setAge(15);
+        personMapper.insert(person);
+       /* int i = 1;
         if(i ==1 ){
             throw new Exception();
-        }
-        return "student-ok";
+        }*/
+        return "person-ok";
     }
 
 }

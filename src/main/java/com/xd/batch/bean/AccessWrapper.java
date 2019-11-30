@@ -3,12 +3,21 @@ package com.xd.batch.bean;
 public class AccessWrapper<T> {
     private T access;
     private String propertyName;
+    private Class fieldType;
     private int index;
 
     public AccessWrapper(T access, String propertyName, int index) {
         this.access = access;
         this.propertyName = propertyName;
         this.index = index;
+    }
+
+    public Class getFieldType() {
+        return fieldType;
+    }
+
+    public void setFieldType(Class fieldType) {
+        this.fieldType = fieldType;
     }
 
     public T getAccess() {

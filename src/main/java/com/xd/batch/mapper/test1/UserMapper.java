@@ -1,4 +1,4 @@
-package com.xd.batch.mapper.splitPackage.test1;
+package com.xd.batch.mapper.test1;
 
 import org.springframework.stereotype.Repository;
 
