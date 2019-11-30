@@ -182,6 +182,7 @@ public class RedisConfigTest {
             int age = resultSet.getInt("age");// 获取第四列的值 图书价格 price
             System.out.println(userName + "........." + password + "....." + age + "..................................");
         }
+        // todo
 
     }
 
