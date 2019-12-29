@@ -41,7 +41,7 @@
     </select>
 
     <select id="find" resultMap="BaseResultMap" parameterType="com.xd.batch.entity.User">
-        select * from user
+        select * from t_user
         <where>
             <if test="userName!=null and userName!=''">
                 and user_name = #{userName}

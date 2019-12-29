@@ -8,6 +8,14 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMode;
+import org.apache.ibatis.reflection.DefaultReflectorFactory;
+import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
+import org.apache.ibatis.reflection.property.PropertyTokenizer;
+import org.apache.ibatis.reflection.wrapper.BeanWrapper;
+import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
+import org.apache.ibatis.reflection.wrapper.ObjectWrapper;
+import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -20,6 +28,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -182,6 +192,47 @@ public class RedisConfigTest {
             int age = resultSet.getInt("age");// 获取第四列的值 图书价格 price
             System.out.println(userName + "........." + password + "....." + age + "..................................");
         }
+
+    }
+
+    @Test
+    public void testSource() throws SQLException {
+        SqlSession sqlSession = test1SqlSessionFactory.openSession(true);
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        List<User> select = mapper.find(new User("xiaodai"));
+        System.out.println("dsdsddddddddddddddddddddddddddddddd");
+
+    }
+
+    @Test
+    public void getInstance() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        Class<User> userClass = User.class;
+        // 获取具有public访问权限的无参构造函数
+        User user = userClass.newInstance();
+        // 获取包括private权限的无参（带上参数就是有参）构造函数
+        Constructor<User> declaredConstructor = userClass.getDeclaredConstructor();
+        // 获取具有public访问权限的无参（带上参数就是有参）构造函数
+        Constructor<User> constructor = userClass.getConstructor();
+        User user1 = declaredConstructor.newInstance();
+    }
+    @Test
+    public void mybatisReflect(){
+
+        DefaultObjectFactory defaultObjectFactory = new DefaultObjectFactory();
+        User user = defaultObjectFactory.create(User.class);
+        ObjectWrapperFactory objectWrapperFactory = new DefaultObjectWrapperFactory();
+        // 使用Reflector读取类元信息
+        DefaultReflectorFactory defaultReflectorFactory = new DefaultReflectorFactory();
+        // 反射工具类初始化
+        MetaObject metaObject = MetaObject.forObject(user, defaultObjectFactory, objectWrapperFactory, defaultReflectorFactory);
+
+        User userTemp = new User();
+        // 使用ObjectWrapper读取对象信息，并对对象属性进行赋值操作
+        ObjectWrapper objectWrapper = new BeanWrapper(metaObject,userTemp);
+        objectWrapper.set(new PropertyTokenizer("userName"),"xiaodai");
+        String userName = userTemp.getUserName();
+        System.out.println(userName);
+
 
     }
 
