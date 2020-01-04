@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class SpringContextHolder implements ApplicationContextAware {
 
-    private static final ThreadLocal<HttpServletResponse> responseThreadLocal = new ThreadLocal();
+    private static final ThreadLocal<HttpServletResponse> responseThreadLocal = new ThreadLocal<>();
 
     private static ApplicationContext applicationContext;
 

@@ -80,7 +80,7 @@ public class ClazzLoaderUtil {
      * @param clazz
      * @return
      */
-    public static ArrayList<Class> getAllClassByInterface(Class clazz) {
+    public static ArrayList<Class> getAllClassByInterface(Class<com.xd.batch.cache.ICacheDefinition> clazz) {
         ArrayList<Class> list = new ArrayList<>();
         // 判断是否是一个接口
         if (clazz.isInterface()) {

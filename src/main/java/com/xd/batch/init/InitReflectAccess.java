@@ -45,7 +45,7 @@ public class InitReflectAccess implements InitializingBean{
         Class[] returnTypes = methodAccess.getReturnTypes();
         String[] methodNames = methodAccess.getMethodNames();
         for (int i = 0; i < methodNames.length; i++) {
-            AccessWrapper<MethodAccess> accessWrapper = new AccessWrapper(methodAccess, methodNames[i], i);
+            AccessWrapper<MethodAccess> accessWrapper = new AccessWrapper<>(methodAccess, methodNames[i], i);
             abstractCacheDefinition.getLocalCache().putAccess(aClass,accessWrapper);
         }
     }
@@ -56,7 +56,7 @@ public class InitReflectAccess implements InitializingBean{
         Class[] fieldTypes = fieldAccess.getFieldTypes();
         String[] fieldNames = fieldAccess.getFieldNames();
         for (int i = 0; i < fieldNames.length; i++) {
-            AccessWrapper<FieldAccess> accessWrapper = new AccessWrapper(fieldAccess, fieldNames[i], i);
+            AccessWrapper<FieldAccess> accessWrapper = new AccessWrapper<>(fieldAccess, fieldNames[i], i);
             abstractCacheDefinition.getLocalCache().putAccess(aClass,accessWrapper);
         }
     }

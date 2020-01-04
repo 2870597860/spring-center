@@ -12,7 +12,6 @@ import org.apache.ibatis.reflection.DefaultReflectorFactory;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.property.PropertyTokenizer;
-import org.apache.ibatis.reflection.wrapper.BeanWrapper;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.apache.ibatis.reflection.wrapper.ObjectWrapper;
 import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
@@ -219,20 +218,18 @@ public class RedisConfigTest {
     public void mybatisReflect(){
 
         DefaultObjectFactory defaultObjectFactory = new DefaultObjectFactory();
-        User user = defaultObjectFactory.create(User.class);
         ObjectWrapperFactory objectWrapperFactory = new DefaultObjectWrapperFactory();
         // 使用Reflector读取类元信息
         DefaultReflectorFactory defaultReflectorFactory = new DefaultReflectorFactory();
+        User user = defaultObjectFactory.create(User.class);
         // 反射工具类初始化
         MetaObject metaObject = MetaObject.forObject(user, defaultObjectFactory, objectWrapperFactory, defaultReflectorFactory);
-
-        User userTemp = new User();
+        // BeanWrapper
+        ObjectWrapper objectWrapper = metaObject.getObjectWrapper();
         // 使用ObjectWrapper读取对象信息，并对对象属性进行赋值操作
-        ObjectWrapper objectWrapper = new BeanWrapper(metaObject,userTemp);
         objectWrapper.set(new PropertyTokenizer("userName"),"xiaodai");
-        String userName = userTemp.getUserName();
+        String userName = user.getUserName();
         System.out.println(userName);
-
 
     }
 
