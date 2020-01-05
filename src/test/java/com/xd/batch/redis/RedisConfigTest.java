@@ -4,6 +4,8 @@ import com.xd.batch.entity.User;
 import com.xd.batch.mapper.test1.UserMapper;
 import com.xd.batch.service.Test34Service;
 import com.xd.batch.service.TestService;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
@@ -56,6 +58,8 @@ public class RedisConfigTest {
 
     @Resource(name = "test1SqlSessionTemplate")
     private SqlSessionTemplate test1SqlSessionTemplate;
+
+    Log log = LogFactory.getLog(RedisConfigTest.class);
 
 
 
@@ -196,6 +200,7 @@ public class RedisConfigTest {
 
     @Test
     public void testSource() throws SQLException {
+        log.trace("sasasa");
         SqlSession sqlSession = test1SqlSessionFactory.openSession(true);
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         List<User> select = mapper.find(new User("xiaodai"));
