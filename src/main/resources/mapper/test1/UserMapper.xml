@@ -12,6 +12,9 @@
     </sql>
 
     <insert id="insert" parameterType="com.xd.batch.entity.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select LAST_INSERT_ID()
+        </selectKey>
 		insert into t_user (id,user_name,`age`,`password`)
 		values(#{id,jdbcType=INTEGER},
 		#{userName,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{password,jdbcType=VARCHAR})

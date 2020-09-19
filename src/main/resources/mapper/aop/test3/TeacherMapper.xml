@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xd.batch.mapper.aop.test3.TeacherMapper">
+
     <resultMap id="BaseResultMap" type="com.xd.batch.entity.Teacher">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
@@ -10,6 +11,7 @@
     <sql id="Base_Column_List">
         id,`name`,`age`,`class_num`
     </sql>
+
 
     <insert id="insert" parameterType="com.xd.batch.entity.Teacher">
 		insert into t_teacher (id,`name`,`age`,class_num)

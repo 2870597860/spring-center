@@ -20,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -182,6 +183,22 @@ public class RedisConfigTest {
             int age = resultSet.getInt("age");// 获取第四列的值 图书价格 price
             System.out.println(userName + "........." + password + "....." + age + "..................................");
         }
+
+    }
+
+    @Test
+    public void testList() throws ClassNotFoundException {
+        SqlSession sqlSession = test1SqlSessionFactory.openSession(true);
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        User user = new User();
+        user.setPassword("xiaodai123456");
+        user.setAge(23);
+        user.setUserName("xiaodaixiaodai");
+        mapper.insert(user);
+
+        List<User> users = mapper.find(user);
+
+        System.out.println();
 
     }
 
